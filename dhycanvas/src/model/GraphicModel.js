@@ -80,4 +80,5 @@ class GraphicModel {
   }
 }
 
-export default GraphicModel;
+const graphicModelInstance = new GraphicModel();
+export default graphicModelInstance;

@@ -7,7 +7,7 @@ import { SelectCommand } from "../command/SelectCommand";
 import { DeleteCommand } from "../command/DeleteCommand";
 import { ShapeFactory } from "../model/ShapeFactory";
 import CommandHistory from "../command/CommandHistory";
-import GraphicModel from "../model/GraphicModel";
+import graphicModelInstance from "../model/GraphicModel";
 import { PencilObject } from "../model/PencilObject";
 
 //캔버스에서 사용자 인터페이스를 관리
@@ -27,7 +27,7 @@ class CanvasController {
     this.contextMenu = null; //컨텍스트 메뉴 요소를 저장
     this.moveCompleteButton = null; //이동 완료 버튼 저장
     this.currentCommand = null; //현재 실행 중인 명령을 저장
-    GraphicModel.addObserver(this); //GraphicModel의 옵저버로 등록
+    graphicModelInstance.addObserver(this); //GraphicModel의 옵저버로 등록
   }
 
   // 싱글톤 인스턴스를 반환
@@ -57,7 +57,7 @@ class CanvasController {
   clearCanvas() {
     const context = this.context;
     context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    GraphicModel.clearObjects();
+    graphicModelInstance.clearObjects();
     CommandHistory.clearHistory();
   }
 
@@ -65,7 +65,7 @@ class CanvasController {
   updateCanvas() {
     const context = this.context;
     context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    GraphicModel.objects.forEach((obj) => {
+    graphicModelInstance.objects.forEach((obj) => {
       context.strokeStyle = obj.color;
       context.fillStyle = obj.color;
       context.lineWidth = 2;
@@ -86,7 +86,7 @@ class CanvasController {
         }
       }
 
-      if (obj === GraphicModel.selectedObject) {
+      if (obj === graphicModelInstance.selectedObject) {
         context.strokeStyle = "#14DEF0";
         context.lineWidth = 4;
         context.setLineDash([5, 5]);
@@ -267,7 +267,7 @@ class CanvasController {
         const shape = ShapeFactory.createShape(state.currentTool, x, y, state.currentColor);
         shape.draw(context);
         const obj = { tool: state.currentTool, x, y, color: state.currentColor };
-        GraphicModel.addObject(obj); // ** 수정: 새 도형을 GraphicModel에 추가
+        graphicModelInstance.addObject(obj); // ** 수정: 새 도형을 GraphicModel에 추가
         const command = new DrawCommand();
         command.addPoint(obj);
         command.execute(context);
