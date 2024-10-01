@@ -80,4 +80,4 @@ class GraphicModel {
   }
 }
 
-export default new GraphicModel();
+export default GraphicModel;

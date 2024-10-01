@@ -1,11 +1,4 @@
-import {
-  startDrawing,
-  stopDrawing,
-  addObject,
-  removeObject,
-  clearCanvas as clearCanvasAction,
-  updateCanvas,
-} from "../redux/actions";
+import { startDrawing, stopDrawing, addObject, removeObject, updateCanvas } from "../redux/actions";
 import store from "../redux/store";
 import { DrawCommand } from "../command/DrawCommand";
 import { EraseCommand } from "../command/EraseCommand";
